@@ -6,12 +6,14 @@ Note: these are instructions to follow for the instructor.
 
 - Install Ruby by running `installers/windows/rubyinstaller-1.9.3-p448.exe` 
 - Install Sublime by running `installers/windows/Sublime Text 2.0.2 Setup.exe`
+- From the command line: `gem install gosu`
 
 ## Mac
 
 - Ruby is already installed! Yaay!
 - Install Sublime by running `installers/mac/Sublime Text 2.0.2.dmg`
   - And drag Sublime into Applications
+- From the terminal: `gem install gosu`
 
 # 2. Let's Begin!
 
