@@ -24,4 +24,8 @@ class Player
   def move_up
   	@top = @top - 3
   end
+
+  def eaten_by?(pacman)
+    Gosu::distance(@right, @top, pacman.right, pacman.top) < 50
+  end
 end

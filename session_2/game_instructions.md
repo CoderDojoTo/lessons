@@ -452,3 +452,191 @@ That's interesting, pacman is starting at the same position everytime. Let's ran
 Okay, cool. But nothing happens when pacman gets to the ghost.
 
 # 9. Catching the ghost.
+
+We need to find out when pacman "eats" the ghost.
+
+Let's write the code we want in `window.rb` `update` method:
+
+```ruby
+  if @player.eaten_by?(@pacman)
+    @stop_game = true
+  end
+```
+
+We don't have a `eaten_by?` method, so let's write that.
+
+**player.rb**
+```ruby
+  def eaten_by?(pacman)
+    Gosu::distance(@right, @top, pacman.right, pacman.top) < 50
+  end
+```
+
+Gosu gives us a method we can use to find the distance between two different co-ordinates. We're going to give it the co-ordinates of our ghost and also the co-ordinates of our pacman. And we're going to say if the distance is less than 50 then pacman's eaten the ghost.
+
+But we're not really doing anything when we set the `@stop_game` variable to true. So let's fix that.
+
+If the `@stop_game` variable is set, we need to exit the `update` method and not change anything.
+
+**window.rb**
+```ruby
+  def update
+
+    if @stop_game == true
+      return
+    end
+
+    if button_down? Gosu::Button::KbRight
+      @player.move_right
+    end
+
+    if button_down? Gosu::Button::KbLeft
+      @player.move_left
+    end
+
+    if button_down? Gosu::Button::KbDown
+      @player.move_down
+    end
+
+    if button_down? Gosu::Button::KbUp
+      @player.move_up
+    end
+
+    @pacman.move_right
+
+    if @player.eaten_by?(@pacman)
+      @stop_game = true
+    end
+  end
+```
+
+
+
+Let's run the program. Oh no! We need to define more methods.
+
+**pacman.rb**
+```ruby
+  def right
+    @right
+  end
+
+  def top
+    @top
+  end
+```
+
+These allow player to access pacman's co-ordinates.
+
+# 10. Let's unstuck the game.
+
+It would be nice if we could press a key to restart the game without having to close and run the game again.
+
+Let's use the escape key for that.
+
+**window.rb**
+```ruby
+  def update
+    if button_down? Gosu::Button::KbEscape
+      @stop_game = false
+      @pacman.reset
+    end
+
+    if @stop_game == true
+      return
+    end
+
+    if button_down? Gosu::Button::KbRight
+      @player.move_right
+    end
+
+    if button_down? Gosu::Button::KbLeft
+      @player.move_left
+    end
+
+    if button_down? Gosu::Button::KbDown
+      @player.move_down
+    end
+
+    if button_down? Gosu::Button::KbUp
+      @player.move_up
+    end
+
+    @pacman.move_right
+
+    if @player.eaten_by?(@pacman)
+      @stop_game = true
+    end
+  end
+```
+
+We'll set the `@stop_game` variable to false, so that we don't return from the `update` method. And we'll also reset the pacman so that it starts from the beginning.
+
+# 11. Scoring the game
+
+Let's display the score on the window. Let's say the score goes up each time pacman crosses the screen. If you dodge pacman, you get a point. We'll need a variable to store the score. Let's start there.
+
+**window.rb**
+```ruby
+  def initialize
+    super(500, 500, false)
+    self.caption = "Adnan's Game!"
+    @player = Player.new(self)
+    @pacman = Pacman.new(self)
+    @score = 0
+  end
+``` 
+
+We want to add to the score when pacman passes the screen.
+
+**pacman.rb**
+```ruby
+  def move_right
+    @right = @right + 3
+
+    if @right > @window.width
+      self.reset
+      @window.add_score
+    end
+  end
+```
+
+We don't have a way to access the score variable in the window object from the pacman object. So let's send a message back `add_score`.
+
+**window.rb**
+```ruby
+  def add_score
+    @score = @score + 1
+  end
+```
+
+Okay now we need to show the score. We'll need to use a font to draw the text.
+
+**window.rb**
+```ruby
+  def initialize
+    super(500, 500, false)
+    self.caption = "Adnan's Game!"
+    @player = Player.new(self)
+    @pacman = Pacman.new(self)
+    @score = 0
+    @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
+  end
+
+  def draw
+    @player.draw
+    @pacman.draw
+    @font.draw("Score: " + @score.to_s, 10, 10, 3)
+  end
+```
+
+Oh, one more thing. We'll need to reset the score when we press escape.
+
+**window.rb**
+```ruby
+  def update
+    if button_down? Gosu::Button::KbEscape
+      @score = 0
+      @stop_game = false
+      @pacman.reset
+    end
+```

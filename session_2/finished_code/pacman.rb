@@ -11,15 +11,24 @@ class Pacman
   end
 
   def move_right
-    @right = @right + 3
+    @right = @right + 6
 
     if @right > @window.width
       self.reset
+      @window.add_score
     end
   end
 
   def reset
     @right = 10
     @top = rand(@window.height)
+  end
+
+  def right
+    @right
+  end
+
+  def top
+    @top
   end
 end
