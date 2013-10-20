@@ -451,7 +451,7 @@ That's interesting, pacman is starting at the same position everytime. Let's ran
 ```ruby
   def reset
     @left = 10
-    @top = rand(window.height)
+    @top = rand(@window.height)
   end
 ```
 
