@@ -160,19 +160,22 @@ First, let's modify the code in the window class to detect the keyboard.
 **window.rb**
 ```ruby
 def update
-  if button_down? Gosu::Button::KbRight
-    @player.move_right
+  if button_down? Gosu::Button::KbLeft
+    @player.move_left
   end
 end
 ```
 
 `button_down?` is a method that `Gosu::Window` gives us to we can see if which button is currently pressed down on the keyboard.
 
-`Gosu::Button::KbRight` is how we reference the right button. We don't have to understand the whole line, but as we can see, it's used to reference the right button.
+`Gosu::Button::KbLeft` is how we reference the left button. We don't
+have to understand the whole line, but as we can see, it's used to
+reference the left button.
 
-We're using the if statement here, so we're telling our program, if the right button is pressed down, then send the `move_right` message to the player. Makes sense.
+We're using the if statement here, so we're telling our program, if the
+left button is pressed down, then send the `move_left` message to the player. Makes sense.
 
-But the player doesn't have a `move_right` method!
+But the player doesn't have a `move_left` method!
 
 Let's write it!
 
@@ -181,22 +184,23 @@ Let's write it!
 class Player
   def initialize(window)
     @icon = Gosu::Image.new(window, "images/ghost.png", true)
-    @right = 200
+    @left = 200
   end
 
   def draw
-    @icon.draw(@right, 200, 1)
+    @icon.draw(@left, 200, 1)
   end
 
-  def move_right
-    @right = @right + 3
+  def move_left
+    @left = @left - 3
   end
 end
 ```
 
-Let's define a `@right` variable and let's start it at 200.
+Let's define a `@left` variable and let's start it at 200.
 
-Now in our `move_right` method, we'll just add 3 to `@right`.
+Now in our `move_left` method, we'll just subtract 3 from `@left`. Since
+the closer we get to 0 the more we move left.
 
 Okay, let's run our program and see what happens.
 
@@ -207,12 +211,12 @@ Let's detect the left key and make our ghost go left.
 **window.rb**
 ```ruby
 def update
-  if button_down? Gosu::Button::KbRight
-    @player.move_right
-  end
-
   if button_down? Gosu::Button::KbLeft
     @player.move_left
+  end
+
+  if button_down? Gosu::Button::KbRight
+    @player.move_right 
   end
 end
 ```
@@ -220,23 +224,23 @@ end
 **player.rb**
 ```ruby
   def move_right
-    @right = @right - 3
+    @left = @left + 3
   end
 ```
 
-We're going to subtract 3 from the right in order to move left.
+We're going to add 3 to the `@left` in order to move right.
 
 Let's do the same thing for up and down!
 
 **window.rb**
 ```ruby
 def update
-  if button_down? Gosu::Button::KbRight
-    @player.move_right
-  end
-
   if button_down? Gosu::Button::KbLeft
     @player.move_left
+  end
+
+  if button_down? Gosu::Button::KbRight
+    @player.move_right
   end
 
   if button_down? Gosu::Button::KbUp
@@ -266,12 +270,12 @@ Note that we will have to define a `@top` variable.
 ```ruby
   def initialize(window)
     @icon = Gosu::Image.new(window, "images/ghost.png", true)
-    @right = 200
+    @left = 200
     @top = 200
   end
 
   def draw
-    @icon.draw(@right, @top, 1)
+    @icon.draw(@left, @top, 1)
   end
 ```
 
@@ -356,12 +360,12 @@ We'll have to do that in the window code
 **window.rb**
 ```ruby
   def update
-    if button_down? Gosu::Button::KbRight
-      @player.move_right
-    end
-
     if button_down? Gosu::Button::KbLeft
       @player.move_left
+    end
+
+    if button_down? Gosu::Button::KbRight
+      @player.move_right
     end
 
     if button_down? Gosu::Button::KbDown
@@ -386,15 +390,15 @@ class Pacman
   def initialize(window)
     @icon = Gosu::Image.new(window, "images/pacman.png", true)
     @top = rand(window.height)
-    @right = 10
+    @left = 10
   end
 
   def draw
-    @icon.draw(@right, @top, 1)
+    @icon.draw(@left, @top, 1)
   end
 
   def move_right
-    @right = @right + 3
+    @left = @left + 3
   end
 end
 ```
@@ -412,23 +416,23 @@ class Pacman
     @window = window
     @icon = Gosu::Image.new(window, "images/pacman.png", true)
     @top = rand(window.height)
-    @right = 10
+    @left = 10
   end
 
   def draw
-    @icon.draw(@right, @top, 1)
+    @icon.draw(@left, @top, 1)
   end
 
   def move_right
-    @right = @right + 3
+    @left = @left + 3
 
-    if @right > @window.width
+    if @left > @window.width
       self.reset
     end
   end
 
   def reset
-    @right = 10
+    @left = 10
   end
 end
 ```
@@ -446,7 +450,7 @@ That's interesting, pacman is starting at the same position everytime. Let's ran
 **pacman.rb**
 ```ruby
   def reset
-    @right = 10
+    @left = 10
     @top = rand(window.height)
   end
 ```
@@ -470,7 +474,7 @@ We don't have a `eaten_by?` method, so let's write that.
 **player.rb**
 ```ruby
   def eaten_by?(pacman)
-    Gosu::distance(@right, @top, pacman.right, pacman.top) < 50
+    Gosu::distance(@left, @top, pacman.left, pacman.top) < 50
   end
 ```
 
@@ -488,12 +492,12 @@ If the `@stop_game` variable is set, we need to exit the `update` method and not
       return
     end
 
-    if button_down? Gosu::Button::KbRight
-      @player.move_right
-    end
-
     if button_down? Gosu::Button::KbLeft
       @player.move_left
+    end
+
+    if button_down? Gosu::Button::KbRight
+      @player.move_right
     end
 
     if button_down? Gosu::Button::KbDown
@@ -518,8 +522,8 @@ Let's run the program. Oh no! We need to define more methods.
 
 **pacman.rb**
 ```ruby
-  def right
-    @right
+  def left
+    @left
   end
 
   def top
@@ -547,12 +551,12 @@ Let's use the escape key for that.
       return
     end
 
-    if button_down? Gosu::Button::KbRight
-      @player.move_right
-    end
-
     if button_down? Gosu::Button::KbLeft
       @player.move_left
+    end
+
+    if button_down? Gosu::Button::KbRight
+      @player.move_right
     end
 
     if button_down? Gosu::Button::KbDown
@@ -593,9 +597,9 @@ We want to add to the score when pacman passes the screen.
 **pacman.rb**
 ```ruby
   def move_right
-    @right = @right + 3
+    @left = @left + 3
 
-    if @right > @window.width
+    if @left > @window.width
       self.reset
       @window.add_score
     end

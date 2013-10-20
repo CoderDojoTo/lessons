@@ -1,20 +1,20 @@
 class Player
   def initialize(window)
     @icon = Gosu::Image.new(window, "images/ghost.png", true)
-    @right = 200
+    @left = 200
     @top = 200
   end
 
   def draw
-    @icon.draw(@right, @top, 1)
-  end
-
-  def move_right
-  	@right = @right + 3
+    @icon.draw(@left, @top, 1)
   end
 
   def move_left
-  	@right = @right - 3
+  	@left = @left - 3
+  end
+
+  def move_right
+  	@left = @left - 3
   end
 
   def move_down
@@ -26,6 +26,6 @@ class Player
   end
 
   def eaten_by?(pacman)
-    Gosu::distance(@right, @top, pacman.right, pacman.top) < 50
+    Gosu::distance(@left, @top, pacman.left, pacman.top) < 50
   end
 end

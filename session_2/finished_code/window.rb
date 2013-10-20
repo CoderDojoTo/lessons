@@ -22,12 +22,12 @@ class Window < Gosu::Window
       return
     end
 
-    if button_down? Gosu::Button::KbRight
-      @player.move_right
-    end
-
     if button_down? Gosu::Button::KbLeft
       @player.move_left
+    end
+
+    if button_down? Gosu::Button::KbRight
+      @player.move_right
     end
 
     if button_down? Gosu::Button::KbDown

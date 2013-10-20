@@ -3,29 +3,29 @@ class Pacman
     @window = window
     @icon = Gosu::Image.new(window, "images/pacman.png", true)
     @top = rand(window.height)
-    @right = 10
+    @left = 10
   end
 
   def draw
-    @icon.draw(@right, @top, 1)
+    @icon.draw(@left, @top, 1)
   end
 
   def move_right
-    @right = @right + 6
+    @left = @left + 12
 
-    if @right > @window.width
+    if @left > @window.width
       self.reset
       @window.add_score
     end
   end
 
   def reset
-    @right = 10
+    @left = 10
     @top = rand(@window.height)
   end
 
-  def right
-    @right
+  def left
+    @left
   end
 
   def top
