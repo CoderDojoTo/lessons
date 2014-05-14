@@ -86,7 +86,10 @@ Right click on the code folder, and select `New file`
 
 Save the file and call it `player.rb`
 
-Let's define the Class with the most basic code:
+To make sure our program knows about our new file and can use it, 
+don't forget to add the line ```require './player'``` in `main.rb`
+
+Now let's go back to `player.rb` and define the Player class with the most basic code:
 
 ```ruby
 class Player
