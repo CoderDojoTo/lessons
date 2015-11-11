@@ -1,0 +1,20 @@
+.panel {
+    border-style: dotted;
+    border-width: 2px;
+}
+
+.layout-grass {
+    padding-top: 50px;
+    border-style: solid;
+    border-width: 5px;
+    background-color: green;
+    text-align: center;
+}
+
+.spring-fairies {
+    padding-top: 50px;
+    border-style: solid;
+    border-width: 5px;
+    background-color: purple;
+    text-align: center;
+}
