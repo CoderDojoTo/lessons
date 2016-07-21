@@ -1,5 +1,15 @@
 # lessons
 
+<h4>scratch_CreativeComputing</h4>
+- Creative computing
+- Introduction to Scratch by MIT
+- Contributed by ScratchEd and Harvard research teams guide
+
+<h4>coderdojoto_scratch-programming-basics</h4>
+- Self directed, best with mentor for ages 8+
+- Introduction to Scratch by MIT
+- Contributed by Dr. Ming-Yee Iu
+
 <h4>coderdojo_my-first-website</h4> 
 - Self directed, best with mentor ages 8+
 - Basic HTML and CSS
@@ -12,7 +22,7 @@
 <h4>coderdojoto_html5-animation</h4>
 - Best with mentor, ages 10+
 - Advanced HTML5 with basic instruction
-- Contributed by Ming-Yee Iu
+- Contributed by Dr. Ming-Yee Iu
 
 <h4>coderdojoto_nodeBand</h4> 
 - Lead instructor and advanced nodeJs set up required
@@ -29,11 +39,6 @@
 - Intro to ruby language ages 8+
 - Mentor required
 - Contributed by Adnan Ali
-
-<h4>coderdojoto_scratch-programming-basics</h4>
-- Self directed, best with mentor for ages 8+
-- Introduction to Scratch by MIT
-- Contributed by Ming-Yee Iu
 
 <h4>coderdojoto_scratch_simulation</h4>
 - Self directed, best with mentor for ages 8+
